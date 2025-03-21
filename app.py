@@ -1,8 +1,14 @@
+import os
 from flask import Flask, jsonify
-from flask_cors import CORS  # Import CORS
+from flask_cors import CORS  
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for the app
+CORS(app)  
+
+# Root route added
+@app.route('/')
+def home():
+    return "Flask Todo App is Running!"
 
 @app.route('/api/tasks', methods=['GET'])
 def get_tasks():
@@ -13,4 +19,5 @@ def get_tasks():
     return jsonify(tasks)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Render dynamically assigns a port
+    app.run(host="0.0.0.0", port=port, debug=True)
